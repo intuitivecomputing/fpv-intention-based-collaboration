@@ -1,0 +1,15 @@
+<launch>
+	<!-- Bring up "cam_1" realsense camera -->
+	<include file ="$(find realsense2_camera)/launch/rs_rgbd.launch">
+		<arg name="camera" value="cam_1"/>
+		<arg name="serial_no" value="750612071028"/>
+	</include>
+
+	<!-- Record RGB and depth data from the "cam_1" realsense camera -->
+	<node name="frames_recorder_cam_1" pkg="fpv_intention_based_collaboration" type="frames_recorder.py">
+		<remap from="/camera/color/image_raw" to="/cam_1/color/image_raw"/>
+		<remap from="/camera/aligned_depth_to_color/image_raw" to="/cam_1/aligned_depth_to_color/image_raw"/>
+		<param name="dir_rgb" value="/home/gopika/collab-data/collab-rgb-frames-cam-1"/>
+		<param name="dir_depth" value="/home/gopika/collab-data/collab-depth-frames-cam-1"/>
+	</node>
+</launch>
