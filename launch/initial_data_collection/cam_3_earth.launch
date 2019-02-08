@@ -3,6 +3,7 @@
 	<include file ="$(find realsense2_camera)/launch/rs_rgbd.launch">
 		<arg name="camera" value="cam_3"/>
 		<arg name="serial_no" value="841512070749"/>
+		<arg name="filters" value="colorizer"/>
 	</include>
 
 	<!-- Record RGB and depth data from the "cam_3" realsense camera -->

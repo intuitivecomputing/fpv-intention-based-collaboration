@@ -12,7 +12,7 @@ class frames_recorder:
     def __init__(self):
         rospy.Subscriber('/start', Bool, self.signal_cb)
         rospy.Subscriber("/camera/color/image_raw", Image, self.image_cb)
-        rospy.Subscriber("/camera/aligned_depth_to_color/image_raw", Image, self.depth_cb)
+        rospy.Subscriber("/camera/depth/image_rect_raw", Image, self.depth_cb)
         self.bridge = CvBridge()
         self.num_rgb = 0
         self.num_depth = 0
