@@ -12,33 +12,40 @@ CHUNK = int(RATE / 10)  # 100ms
 
 class voice_recorder:
     def __init__(self):
-        rospy.Subscriber('/start', Bool, self.signal_cb)
-        self.start = 0
+        rospy.Subscriber('/stop', Bool, self.signal_cb)
+        self.stop = 1
+        self.stop_old = 0
         self.p = pyaudio.PyAudio()
         self.frames = []  
+        self.stop_recording = 0
+        self.num_collections = 0
 
     def signal_cb(self, msg):
-        self.start = msg.data
-        if (self.start == 1):
+        self.stop = msg.data
+        if ((self.stop - self.stop_old) == -1):
+            self.stop_old = self.stop
+            self.num_collections += 1
             self.start_recording()
-        elif (self.start == 0):
-            self.stop_recording()
+        elif ((self.stop - self.stop_old) == 1):
+            self.stop_old = self.stop
+            self.stop_recording()  
 
     def start_recording(self):
-        self.stream = self.p.open(format=pyaudio.paInt16, channels=1, rate=RATE, input=True, frames_per_buffer=CHUNK)
-
-        while (self.start == 1):
-            data = self.stream.read(CHUNK)
+        self.stop_recording = 0
+        self.frames = []
+        stream = self.p.open(format=pyaudio.paInt16, channels=1, rate=RATE, input=True, frames_per_buffer=CHUNK)
+        
+        while self.stop_recording == 0:
+            data = stream.read(CHUNK)
             self.frames.append(data)
-            if (self.start == 0):
-                self.stop_recording()
-                break
 
-        self.stream.close()
-        dir_audio = "/home/gopika/collab-data/audio"
+        stream.close()
+        dir_audio = rospy.get_param('~dir_audio', '/home/gopika/collab-data/audio')
+        dir_audio = dir_audio + "-collection-" + str(self.num_collections) 
         if not os.path.exists(dir_audio):
             os.makedirs(dir_audio)
-        file_audio = dir_audio + "/recording.wav"
+
+        file_audio = dir_audio + "/recording" + str(self.num_collections) + ".wav"
         wf = wave.open(file_audio, 'wb')
         wf.setnchannels(1)
         wf.setsampwidth(self.p.get_sample_size(pyaudio.paInt16))
@@ -47,8 +54,7 @@ class voice_recorder:
         wf.close()
 
     def stop_recording(self):
-        self.start = 0
-
+        self.stop = 1
 
 def main():
     rospy.init_node("voice_recorder")
