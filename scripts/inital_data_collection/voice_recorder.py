@@ -54,7 +54,7 @@ class voice_recorder:
         wf.close()
 
     def stop_recording(self):
-        self.stop = 1
+        self.stop_recording = 1
 
 def main():
     rospy.init_node("voice_recorder")
