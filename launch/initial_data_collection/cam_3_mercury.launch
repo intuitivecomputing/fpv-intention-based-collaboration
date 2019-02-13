@@ -1,6 +1,6 @@
 <launch>
 	<!-- Bring up "cam_3" realsense camera -->
-	<include file ="$(find realsense2_camera)/launch/rs_rgbd.launch">
+	<include file ="$(find realsense2_camera)/launch/rs_camera.launch">
 		<arg name="camera" value="cam_3"/>
 		<arg name="serial_no" value="841512070749"/>
 		<arg name="filters" value="colorizer"/>

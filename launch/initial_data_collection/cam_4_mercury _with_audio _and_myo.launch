@@ -13,4 +13,14 @@
 		<param name="dir_rgb" value="/home/gopika/collab-data/collab-rgb-frames-cam-4"/>
 		<param name="dir_depth" value="/home/gopika/collab-data/collab-depth-frames-cam-4"/>
 	</node>
+
+	<!-- Record audio data -->
+	<node name="voice_recorder" pkg="fpv_intention_based_collaboration" type="voice_recorder.py">
+		<param name="dir_audio" value="/home/gopika/collab-data/audio"/>
+	</node>
+
+	<!-- Record myo data -->
+	<node name="emg_recorder" pkg="fpv_intention_based_collaboration" type="emg_recorder.py">
+		<param name="dir_myo" value="/home/gopika/collab-data/myo"/>
+	</node>
 </launch>
