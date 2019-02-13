@@ -7,9 +7,9 @@
 	</include>
 
 	<!-- Record RGB and depth data from the "cam_4" realsense camera -->
-	<node name="frames_recorder_cam_4" pkg="fpv_intention_based_collaboration" type="frames_recorder.py">
+	<node name="frames_recorder_cam_4" pkg="fpv_intention_based_collaboration" type="frames_recorder.py" output="screen">
 		<remap from="/camera/color/image_raw" to="/cam_4/color/image_raw"/>
-		<remap from="/camera/aligned_depth_to_color/image_raw" to="/cam_4/aligned_depth_to_color/image_raw"/>
+		<remap from="/camera/depth/image_rect_raw" to="/cam_4/depth/image_rect_raw"/>
 		<param name="dir_rgb" value="/home/gopika/collab-data/collab-rgb-frames-cam-4"/>
 		<param name="dir_depth" value="/home/gopika/collab-data/collab-depth-frames-cam-4"/>
 	</node>

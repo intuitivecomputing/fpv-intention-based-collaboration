@@ -43,17 +43,21 @@ class frames_recorder:
     def depth_cb(self, data):
         if (self.stop == 0):
             try:
-                image = self.bridge.imgmsg_to_cv2(data, "16UC1")
-                depth_array = np.array(image, dtype=np.float32)
-                cv2.normalize(depth_array, depth_array, 0, 1, cv2.NORM_MINMAX)
+                # image = self.bridge.imgmsg_to_cv2(data, "16UC1")
+                # depth_array = np.array(image, dtype=np.float32)
+                # cv2.normalize(depth_array, depth_array, 0, 1, cv2.NORM_MINMAX)
+                image = self.bridge.imgmsg_to_cv2(data, "rgb8")
             except CvBridgeError as e:
                 print e
+
+            ## save image
             dir_depth = rospy.get_param('~dir_depth' ,'/home/gopika/collab-data/collab-depth-frames')
             dir_depth = dir_depth + "-collection-" + str(self.num_collections) 
             if not os.path.exists(dir_depth):
                 os.makedirs(dir_depth)
             file_depth = dir_depth + "/frame" + str(self.num_depth) + '.png'
-            cv2.imwrite(file_depth, depth_array*255)
+            # cv2.imwrite(file_depth, depth_array*255)
+            cv2.imwrite(file_depth, image)
             self.num_depth += 1
 
 def main():

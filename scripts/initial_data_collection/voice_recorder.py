@@ -17,7 +17,7 @@ class voice_recorder:
         self.stop_old = 0
         self.p = pyaudio.PyAudio()
         self.frames = []  
-        self.stop_recording = 0
+        self.should_stop_recording = 0
         self.num_collections = 0
 
     def signal_cb(self, msg):
@@ -31,11 +31,11 @@ class voice_recorder:
             self.stop_recording()  
 
     def start_recording(self):
-        self.stop_recording = 0
+        self.should_stop_recording = 0
         self.frames = []
         stream = self.p.open(format=pyaudio.paInt16, channels=1, rate=RATE, input=True, frames_per_buffer=CHUNK)
         
-        while self.stop_recording == 0:
+        while self.should_stop_recording == 0:
             data = stream.read(CHUNK)
             self.frames.append(data)
 
@@ -54,7 +54,7 @@ class voice_recorder:
         wf.close()
 
     def stop_recording(self):
-        self.stop_recording = 1
+        self.should_stop_recording = 1
 
 def main():
     rospy.init_node("voice_recorder")
