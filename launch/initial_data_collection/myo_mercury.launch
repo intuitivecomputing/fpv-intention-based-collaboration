@@ -4,8 +4,8 @@
   	<arg name="rviz" default="false" doc="rviz visualization or not"/>
 
   	<!-- myo ros node -->
-  	<node pkg="ros_myo_mercury" name="myo_raw" type="myo-rawNode.py" args="$(arg port)" output="screen"/>
-  	
+  	<node pkg="ros_myo" name="myo_raw_mercury" type="myo-rawNode.py" args="$(arg port)" output="screen"/>
+
     <node name="emg_recorder_mercury" pkg="fpv_intention_based_collaboration" type="emg_recorder.py">
         <param name="dir_myo" value="/home/gopika/collab-data/myo"/>
     </node>

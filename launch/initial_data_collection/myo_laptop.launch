@@ -4,12 +4,8 @@
   	<arg name="rviz" default="false" doc="rviz visualization or not"/>
 
   	<!-- myo ros node -->
-  	<node pkg="ros_myo_laptop" name="myo_raw" type="myo-rawNode.py" args="$(arg port)" output="screen"/>
+  	<node pkg="ros_myo" name="myo_raw_laptop" type="myo-rawNode.py" args="$(arg port)" output="screen"/>
 
-    <!-- Record myo data -->
-    <include file ="$(find ros_myo)/launch/myo.launch">
-        <arg name="rviz" value="false"/> 
-    </include>    
     <node name="emg_recorder_laptop" pkg="fpv_intention_based_collaboration" type="emg_recorder.py">
         <param name="dir_myo" value="/home/intuitive-computing/collab-data/myo"/>
     </node>
