@@ -14,7 +14,7 @@ class voice_recorder:
     def __init__(self):
         rospy.Subscriber('/stop', Bool, self.signal_cb)
         self.stop = 1
-        self.stop_old = 0
+        self.stop_old = 1
         self.p = pyaudio.PyAudio()
         self.frames = []  
         self.should_stop_recording = 0
@@ -24,7 +24,6 @@ class voice_recorder:
         self.stop = msg.data
         if ((self.stop - self.stop_old) == -1):
             self.stop_old = self.stop
-            self.num_collections += 1
             self.start_recording()
         elif ((self.stop - self.stop_old) == 1):
             self.stop_old = self.stop
@@ -52,6 +51,7 @@ class voice_recorder:
         wf.setframerate(RATE)
         wf.writeframes(b''.join(self.frames))
         wf.close()
+        self.num_collections += 1
 
     def stop_recording(self):
         self.should_stop_recording = 1

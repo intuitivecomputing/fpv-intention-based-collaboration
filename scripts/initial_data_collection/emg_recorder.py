@@ -5,6 +5,7 @@ from ros_myo.msg import EmgArray
 import numpy as np
 import matplotlib.pyplot as plt
 from std_msgs.msg import Bool
+import os
 
 class myo_recorder():
     def __init__(self):
@@ -36,6 +37,7 @@ class myo_recorder():
             status = self.Plot()
             if (status == 1):
                 rospy.logwarn("Plot failed")
+            self.should_stop_recording = 0
 
     def Plot(self):
         if (self.counter != 1):

@@ -1,7 +1,9 @@
-<!-- Record myo data -->
-<!-- Bring up myo band -->
-<include file ="$(find ros_myo)/launch/myo.launch"/>
-
-<node name="emg_recorder" pkg="fpv_intention_based_collaboration" type="emg_recorder.py">
-	<param name="dir_myo" value="/home/gopika/collab-data/myo"/>
-</node>
+<launch>
+    <!-- Record myo data -->
+    <include file ="$(find ros_myo)/launch/myo.launch">
+        <arg name="rviz" value="false"/> 
+    </include>    
+    <node name="emg_recorder" pkg="fpv_intention_based_collaboration" type="emg_recorder.py">
+        <param name="dir_myo" value="/home/gopika/collab-data/myo"/>
+    </node>
+</launch>

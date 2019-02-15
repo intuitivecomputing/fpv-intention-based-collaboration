@@ -190,8 +190,8 @@ install(PROGRAMS
 # )
 
 # Install launch files
-install(DIRECTORY launch/
-    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
+install(DIRECTORY launch/initial_data_collection/
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
     )
 
 #############
