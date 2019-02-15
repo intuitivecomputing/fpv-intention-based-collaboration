@@ -15,7 +15,7 @@
 	</node>
 
 	<!-- Record audio data -->
-	<node name="voice_recorder" pkg="fpv_intention_based_collaboration" type="voice_recorder.py">
+	<node name="voice_recorder_mercury" pkg="fpv_intention_based_collaboration" type="voice_recorder.py">
 		<param name="dir_audio" value="/home/gopika/collab-data/audio"/>
 	</node>
 
