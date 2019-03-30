@@ -36,7 +36,7 @@ class frames_recorder:
             dir_rgb = dir_rgb + "-collection-" + str(self.num_collections) 
             if not os.path.exists(dir_rgb):
                 os.makedirs(dir_rgb)
-            file_rgb = dir_rgb + "/frame" + str(self.num_rgb) + '.png'
+            file_rgb = dir_rgb + "/frame" + (str(self.num_rgb).zfill(8)) + '.png'
             cv2.imwrite(file_rgb, image)
             self.num_rgb += 1
     
@@ -55,7 +55,7 @@ class frames_recorder:
             dir_depth = dir_depth + "-collection-" + str(self.num_collections) 
             if not os.path.exists(dir_depth):
                 os.makedirs(dir_depth)
-            file_depth = dir_depth + "/frame" + str(self.num_depth) + '.png'
+            file_depth = dir_depth + "/frame" + (str(self.num_depth).zfill(8)) + '.png'
             # cv2.imwrite(file_depth, depth_array*255)
             cv2.imwrite(file_depth, image)
             self.num_depth += 1

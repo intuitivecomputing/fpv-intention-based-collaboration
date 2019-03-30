@@ -1,0 +1,22 @@
+<launch>
+	<!-- Bring up "cam_3" realsense camera -->
+	<include file ="$(find realsense2_camera)/launch/rs_camera.launch">
+		<arg name="camera" value="cam_3"/>
+		<arg name="serial_no" value="841512070749"/>
+		<arg name="filters" value="colorizer"/>
+	</include>
+
+	<!-- Record RGB and depth data from the "cam_3" realsense camera -->
+	<node name="frames_recorder_cam_3" pkg="fpv_intention_based_collaboration" type="frames_recorder.py">
+		<remap from="/camera/color/image_raw" to="/cam_3/color/image_raw"/>
+		<remap from="/camera/depth/image_rect_raw" to="/cam_3/depth/image_rect_raw"/>
+		<param name="dir_rgb" value="/home/yeping/collab-data/collab-rgb-frames-cam-3"/>
+		<param name="dir_depth" value="/home/yeping/collab-data/collab-depth-frames-cam-3"/>
+	</node>
+
+	<!-- Record audio data -->
+	<node name="voice_recorder_laptop" pkg="fpv_intention_based_collaboration" type="voice_recorder.py">
+		<param name="dir_audio" value="/home/yeping/collab-data/audio"/>
+	</node>
+
+</launch>
