@@ -22,7 +22,9 @@ def frames2video(path_to_img, img_files, video_name="new_video", fps=30, size=No
     
     """
 
-	fourcc = cv2.VideoWriter_fourcc(*format)
+	fourcc = 0  #uncompressed
+	# fourcc = cv2.VideoWriter_fourcc(*format)  #compressed
+
 	video = None
 	for image_name in img_files:
 		img = cv2.imread(path_to_img + image_name)
@@ -36,8 +38,8 @@ def frames2video(path_to_img, img_files, video_name="new_video", fps=30, size=No
 	return video
 
 if __name__ == "__main__":
-	video_name = "Ikea_Chair_Assembly_without_screw_rgb.avi"
-	path_to_img = "Ikea_Chair_Assembly_without_screw/collab-rgb-frames-cam-3-collection-3/"
+	video_name = "Ikea_Chair_Assembly_rgb.avi"
+	path_to_img = "Ikea_Chair_Assembly/collab-rgb-frames-cam-3-collection-4/"
 	img_files = os.listdir(path_to_img)
 	img_files.sort()
 	video = frames2video(path_to_img, img_files, video_name,  fps=30, size=None,is_color=True, format="XVID")

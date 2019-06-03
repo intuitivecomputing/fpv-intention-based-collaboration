@@ -1,0 +1,25 @@
+<launch>
+	<!-- Bring up web camera -->
+	<node name="fpv_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
+		<param name="video_device" value="/dev/video0" />
+		<param name="image_width" value="960" />
+		<param name="image_height" value="540" />
+		<param name="pixel_format" value="yuyv" />
+		<param name="camera_frame_id" value="fpv_cam" />
+		<param name="io_method" value="mmap"/>
+		<param name="camera_info_url" value="file://$(find furniture_assembly)/camera_info/logitech_webcam.yaml"/>
+		<param name="camera_name" value="webcam"/>
+	</node>
+
+	<!-- Record RGB and depth data from the "cam_3" realsense camera -->
+	<node name="frames_recorder_webcam" pkg="fpv_intention_based_collaboration" type="frames_recorder.py">
+		<remap from="/camera/color/image_raw" to="/fpv_cam/image_raw"/>
+
+		<!-- random value, because there is no depth image anyway -->
+		<remap from="/camera/depth/image_rect_raw" to="/cam_3/depth/image_rect_raw"/>
+
+		<param name="dir_rgb" value="/home/yeping/collab-data/collab-rgb-frames-webcam"/>
+		<param name="dir_depth" value="/home/yeping/collab-data/collab-depth-frames-webcam"/>
+	</node>
+
+</launch>
