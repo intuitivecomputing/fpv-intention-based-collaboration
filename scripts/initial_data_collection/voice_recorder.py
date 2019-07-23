@@ -16,12 +16,14 @@ class voice_recorder:
         self.stop = 1
         self.stop_old = 1
         self.p = pyaudio.PyAudio()
+        print("pyaudio started")
         self.frames = []  
         self.should_stop_recording = 0
         self.num_collections = 0
 
     def signal_cb(self, msg):
         self.stop = msg.data
+        print(self.stop - self.stop_old)
         if ((self.stop - self.stop_old) == -1):
             self.stop_old = self.stop
             self.start_recording()
@@ -32,13 +34,13 @@ class voice_recorder:
     def start_recording(self):
         self.should_stop_recording = 0
         self.frames = []
-        stream = self.p.open(format=pyaudio.paInt16, channels=1, rate=RATE, input=True, frames_per_buffer=CHUNK)
-        
+        stream = self.p.open(format=pyaudio.paInt16, channels=1, rate=RATE, input=True, frames_per_buffer=CHUNK, input_device_index = 7)
         while self.should_stop_recording == 0:
             data = stream.read(CHUNK)
             self.frames.append(data)
 
         stream.close()
+		
         dir_audio = rospy.get_param('~dir_audio', '/home/gopika/collab-data/audio')
         dir_audio = dir_audio + "-collection-" + str(self.num_collections) 
         if not os.path.exists(dir_audio):
