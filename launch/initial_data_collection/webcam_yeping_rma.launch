@@ -1,20 +1,20 @@
 <launch>
 	<!-- Bring up web camera -->
 	
-	<arg name = "use_1080" default="false"/>
+	<arg name = "use_1080" default="true"/>
 
 	<group if = "$(arg use_1080)">
 		<node name="fpv_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
 			<param name="video_device" value="/dev/video0" />
 			<param name="image_width" value="1920" />
 			<param name="image_height" value="1080" />
-			<param name="pixel_format" value="mjpeg" />
+			<param name="pixel_format" value="yuyv" />
 			<param name="camera_frame_id" value="fpv_cam" />
 			<param name="io_method" value="mmap"/>
 			<param name="camera_info_url" value="file://$(find fpv_intention_based_collaboration)/camera_info/logitech_webcam_1080.yaml"/>
 		
 			<param name="camera_name" value="webcam"/>
-			<param name="framerate" value="30" />
+			<param name="framerate" value="5" />
 		</node>
 	</group>
 
@@ -34,7 +34,7 @@
 	</group>
 
 	<!-- Record RGB and depth data from the "cam_3" realsense camera -->
-
+	<group if = "false">
 	<node name="frames_recorder_webcam" pkg="fpv_intention_based_collaboration" type="frames_recorder.py">
 		<remap from="/camera/color/image_raw" to="/fpv_cam/image_raw"/>
 
@@ -54,4 +54,5 @@
   </node>
 
 	<node name = "rviz_gui" pkg ="fpv_intention_based_collaboration" type = "rviz_gui" output="screen" />
+	</group>
 </launch>
