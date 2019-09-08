@@ -13,6 +13,7 @@ CHUNK = int(RATE / 10)  # 100ms
 class voice_recorder:
     def __init__(self):
         rospy.Subscriber('/stop', Bool, self.signal_cb)
+        rospy.Subscriber("/is_baseline",  Bool, self.is_baseline_cb)
         self.stop = 1
         self.stop_old = 1
         self.p = pyaudio.PyAudio()
@@ -20,6 +21,9 @@ class voice_recorder:
         self.frames = []  
         self.should_stop_recording = 0
         self.num_collections = 0
+
+    def is_baseline_cb(self, msg):
+        self.is_baseline = msg.data
 
     def signal_cb(self, msg):
         self.stop = msg.data
@@ -43,7 +47,10 @@ class voice_recorder:
         stream.close()
 		
         dir_audio = rospy.get_param('~dir_audio', '/home/intuitivecomputing/collab-data/audio')
-        dir_audio = dir_audio + "-collection-" + str(self.num_collections) 
+        if (self.is_baseline):
+            dir_audio = dir_audio + "_collection_baseline"
+        else:
+            dir_audio = dir_audio + "_collection_fpv"
         if not os.path.exists(dir_audio):
             os.makedirs(dir_audio)
 

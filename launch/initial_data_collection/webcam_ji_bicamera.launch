@@ -66,25 +66,19 @@
 	<!-- Record RGB and depth data from the "cam_3" realsense camera -->
 	<node name="frames_recorder_lower_webcam" pkg="fpv_intention_based_collaboration" type="frames_recorder.py">
 		<remap from="/camera/color/image_raw" to="lower_cam/fpv_cam/image_raw"/>
-		<!-- random value, because there is no depth image anyway -->
-		<remap from="/camera/depth/image_rect_raw" to="/cam_3/depth/image_rect_raw"/>
 		<param name="dir_rgb" value="/home/intuitivecomputing/collab-data/collab-rgb-frames-lower-webcam"/>
-		<param name="dir_depth" value="/home/intuitivecomputing/collab-data/collab-depth-frames-webcam"/>
 	</node>
 
 	<node name="frames_recorder_upper_webcam" pkg="fpv_intention_based_collaboration" type="frames_recorder.py">
 		<remap from="/camera/color/image_raw" to="upper_cam/fpv_cam/image_raw"/>
-		<!-- random value, because there is no depth image anyway -->
-		<remap from="/camera/depth/image_rect_raw" to="/cam_3/depth/image_rect_raw"/>
 		<param name="dir_rgb" value="/home/intuitivecomputing/collab-data/collab-rgb-frames-upper-webcam"/>
-		<param name="dir_depth" value="/home/intuitivecomputing/collab-data/collab-depth-frames-webcam"/>
 	</node>
 
 
 
-	<node name="voice_recorder" pkg="fpv_intention_based_collaboration" type="voice_recorder.py" output="screen" > 
+	<!-- <node name="voice_recorder" pkg="fpv_intention_based_collaboration" type="voice_recorder.py" output="screen" > 
 		<param name="dir_audio" value="/home/intuitivecomputing/collab-data/audio"/>
-	</node>
+	</node> -->
 
 <!--	<node name="rviz" pkg="rviz" type="rviz" respawn="false" output="screen" args="-d $(find fpv_intention_based_collaboration)/rviz/data_collection.rviz">
   </node> -->
